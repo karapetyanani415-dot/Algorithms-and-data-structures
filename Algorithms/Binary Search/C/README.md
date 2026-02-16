@@ -72,12 +72,3 @@ By using `start + (end - start) / 2`, we ensure the intermediate calculation nev
 | **Space Complexity (Recursive)**    | $O(\log n)$ |
 
 ---
-
-## Usage
-
-To compile the code, use a C compiler like `gcc`:
-
-```bash
-gcc main.c -o binary_search
-./binary_search
-```

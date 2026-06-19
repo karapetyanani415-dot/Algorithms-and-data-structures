@@ -1,4 +1,4 @@
-import { BucketedDeque } from "./Deque.js";
+import { BucketedDeque } from "../Deque/deque_with_backet.js";
 
 class Stack {
   #data;

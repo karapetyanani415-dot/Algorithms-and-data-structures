@@ -1,4 +1,4 @@
-class BucketedDeque {
+export class BucketedDeque {
   // === State ===
   #everyBucketsLength;
   #bucketSize;
@@ -14,6 +14,9 @@ class BucketedDeque {
    * @param {number} [bucketSize]
    */
   constructor(everyBucketsLength = 8, bucketSize = 4) {
+    if (everyBucketsLength <= 0) everyBucketsLength = 8;
+    if (bucketSize <= 0) bucketSize = 4;
+
     this.#everyBucketsLength = everyBucketsLength;
     this.#bucketSize = bucketSize;
     this.#init();
@@ -25,11 +28,22 @@ class BucketedDeque {
    * @param {*} value
    */
   push_front(value) {
+    if (this.#size === 0) {
+      this.#frontBucket = this.#backBucket;
+      this.#frontIndex = this.#backIndex;
+
+      this.#buckets[this.#frontBucket][this.#frontIndex] = value;
+      this.#backIndex++;
+      this.#size++;
+      return;
+    }
     if (this.#frontIndex <= 0) {
       --this.#frontBucket;
+
       if (this.#frontBucket < 0) {
         this._ensureBucket();
       }
+
       this.#frontIndex = this.#everyBucketsLength;
     }
     this.#buckets[this.#frontBucket][--this.#frontIndex] = value;
@@ -40,9 +54,14 @@ class BucketedDeque {
    * @param {*} value
    */
   push_back(value) {
+    if (this.#size === 0) {
+      this.#frontBucket = this.#backBucket;
+      this.#frontIndex = this.#backIndex;
+    }
     if (this.#backIndex >= this.#everyBucketsLength) {
       this.#backIndex = 0;
       ++this.#backBucket;
+
       if (this.#backBucket >= this.#buckets.length) {
         this._ensureBucket();
       }
@@ -145,9 +164,8 @@ class BucketedDeque {
    * @returns {*|undefined}
    */
   at(globalIndex) {
-    if (globalIndex < 0 || globalIndex >= this.#size) return undefined;
-    let [localIdx, bucketIdx] = this._bucketIndex(globalIndex);
-    return this.#buckets[bucketIdx][localIdx];
+    let [localIdx, buckIdx] = this._bucketIndex(globalIndex);
+    return this.#buckets[buckIdx][localIdx];
   }
 
   // === Iterator ===
@@ -184,11 +202,11 @@ class BucketedDeque {
    * @returns {Array<number>}
    */
   _bucketIndex(globalIndex) {
-    let total = this.#frontBucket * this.#everyBucketsLength + this.#frontIndex + globalIndex;
-    let bucketIdx = Math.floor(total / this.#everyBucketsLength);
-    let localIdx = total % this.#everyBucketsLength;
-
-    return [localIdx, bucketIdx];
+    let absoluteIndex = this.#frontIndex + globalIndex;
+    let localIdx = absoluteIndex % this.#everyBucketsLength;
+    let buckIdx =
+      this.#frontBucket + Math.floor(absoluteIndex / this.#everyBucketsLength);
+    return [localIdx, buckIdx];
   }
 
   #init() {

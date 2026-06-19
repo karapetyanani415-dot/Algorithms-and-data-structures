@@ -1,4 +1,4 @@
-import { BucketedDeque } from "./Deque.js";
+import { BucketedDeque } from "../Deque/deque_with_backet.js";
 class Queue {
   #data;
   #size;
@@ -47,45 +47,45 @@ class Queue {
   }
 }
 
-const q = new Queue();
+// const q = new Queue();
 
-console.log("=== Empty Queue ===");
-console.log(q.isEmpty());
-console.log(q.size());
-console.log(q.front());
-console.log(q.back());
+// console.log("=== Empty Queue ===");
+// console.log(q.isEmpty());
+// console.log(q.size());
+// console.log(q.front());
+// console.log(q.back());
 
-console.log("\n=== Enqueue ===");
-q.enqueue(10);
-q.enqueue(20);
-q.enqueue(30);
-console.log(q.front());
-console.log(q.back());
-console.log(q.size());
-console.log(q.toArray());
+// console.log("\n=== Enqueue ===");
+// q.enqueue(10);
+// q.enqueue(20);
+// q.enqueue(30);
+// console.log(q.front());
+// console.log(q.back());
+// console.log(q.size());
+// console.log(q.toArray());
 
-console.log("\n=== Dequeue ===");
-console.log(q.dequeue());
-console.log(q.dequeue());
-console.log(q.front());
-console.log(q.back());
-console.log(q.size());
+// console.log("\n=== Dequeue ===");
+// console.log(q.dequeue());
+// console.log(q.dequeue());
+// console.log(q.front());
+// console.log(q.back());
+// console.log(q.size());
 
-console.log("\n=== Iterator ===");
-q.enqueue(40);
-q.enqueue(50);
-for (const item of q) {
-  console.log(item);
-}
+// console.log("\n=== Iterator ===");
+// q.enqueue(40);
+// q.enqueue(50);
+// for (const item of q) {
+//   console.log(item);
+// }
 
-console.log("\n=== Clear ===");
-q.clear();
-console.log(q.isEmpty());
-console.log(q.size());
+// console.log("\n=== Clear ===");
+// q.clear();
+// console.log(q.isEmpty());
+// console.log(q.size());
 
-console.log("\n=== Error Test ===");
-try {
-  q.dequeue();
-} catch (e) {
-  console.log(e.message);
-}
+// console.log("\n=== Error Test ===");
+// try {
+//   q.dequeue();
+// } catch (e) {
+//   console.log(e.message);
+// }
